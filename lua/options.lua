@@ -7,10 +7,10 @@
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.o.mouse = 'a'
+vim.o.mouse = "a"
 
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
@@ -20,7 +20,7 @@ vim.o.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
+	vim.o.clipboard = "unnamedplus"
 end)
 
 -- Enable break indent
@@ -34,7 +34,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Keep signcolumn on by default
-vim.o.signcolumn = 'yes'
+vim.o.signcolumn = "yes"
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -54,11 +54,11 @@ vim.o.splitbelow = true
 --  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
 --   See `:help lua-options`
 --   and `:help lua-options-guide`
-vim.o.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.o.list = false
+-- vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- Preview substitutions live, as you type!
-vim.o.inccommand = 'split'
+vim.o.inccommand = "split"
 
 -- Show which line your cursor is on
 vim.o.cursorline = true
@@ -71,4 +71,27 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
--- vim: ts=2 sts=2 sw=2 et
+-- ====== Indentación por defecto ======
+vim.opt.tabstop = 4 -- Número de espacios que representa un tab
+vim.opt.shiftwidth = 4 -- Número de espacios para la indentación automática
+vim.opt.expandtab = true -- Convierte tabs a espacios
+vim.opt.smartindent = true -- Indentación automática inteligente
+
+-- ====== Indentación por tipo de archivo ======
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "python" },
+	callback = function()
+		vim.opt_local.tabstop = 4
+		vim.opt_local.shiftwidth = 4
+		vim.opt_local.expandtab = true
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json", "vue", "lua" },
+	callback = function()
+		vim.opt_local.tabstop = 2
+		vim.opt_local.shiftwidth = 2
+		vim.opt_local.expandtab = true
+	end,
+})
